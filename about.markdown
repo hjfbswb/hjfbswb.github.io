@@ -18,8 +18,4 @@ titles:
 key: page-about
 ---
 
-Just say something about yourself. :+1:
-
-{% highlight javascript %}
-(() => console.log('hello, world!'))();
-{% endhighlight %}
+好记性不如烂笔头，千里之行始于足下。
