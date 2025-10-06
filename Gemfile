@@ -1,7 +1,10 @@
 source "https://rubygems.org"
 
+gem 'github-pages', group: :jekyll_plugins
+gem 'jekyll-remote-theme'
+
 # gem "jekyll-text-theme", path: "../"
-gem "jekyll-text-theme"
+#gem "jekyll-text-theme"
 gem "kramdown-parser-gfm"
 gem "jekyll-paginate"
 gem "jekyll-sitemap"
