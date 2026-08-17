@@ -1,6 +1,7 @@
 ---
 title: python function
 tags: python
+categories: [Python]
 modify_date: 2019-12-23
 ---
 

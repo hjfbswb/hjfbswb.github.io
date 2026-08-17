@@ -1,213 +1,132 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
-#
-# ,--------.      ,--.   ,--. ,--.
-# '--.  .--',---.  \  `.'  /,-'  '-.
-#    |  |  | .-. :  .'    \ '-.  .-'
-#    |  |  \   --. /  .'.  \  |  |
-#    `--'   `----''--'   '--' `--'
+# The Site Configuration
 
+# Import the theme
+theme: jekyll-theme-chirpy
 
+# The language of the webpage
+lang: zh-CN
 
+# Change to your timezone
+timezone: Asia/Shanghai
 
-## => Site Settings
-##############################
-text_skin: dark # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
-highlight_theme: tomorrow-night # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
-url     : # the base hostname & protocol for your site e.g. https://www.someone.com
-baseurl : # does not include hostname
-title   : 技术笔记
-description: > # this means to ignore newlines until "Language & timezone"
-  记录一些东西。
+# jekyll-seo-tag settings
+# ↓ --------------------------
 
+title: 技术笔记 # the main title
 
-## => Language and Timezone
-##############################
-lang: zh # the language of your site, "en" (default, English), "zh"(简体中文), "zh-Hans"(简体中文), "zh-Hant"(繁體中文)
-timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for the available values
+tagline: 做喜欢的事，每天进步一点点 # it will display as the subtitle
 
+description: >- # used by seo meta and the atom feed
+  记录 Python、Linux、MCU 及日常工具相关的技术笔记。
 
-## => Author and Social
-##############################
-author:
-  type      : person # "person" (default), "organization"
-  name      : 
-  url       : http://hjfbswb.github.io
-  avatar    : # path or url of avatar image
-  bio       : 做喜欢的事，每天进步一点点。
-  email     : hjfbswb@126.com
-  facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
-  twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
-  googleplus: # "user_id"   the last part of your profile url, e.g. https://plus.google.com/u/0/user_id
-  weibo     : # "user_id"   the last part of your profile url, e.g. https://www.weibo.com/user_id/profile?...
-  douban    : # "user_name" the last part of your profile url, e.g. https://www.douban.com/people/user_name/
-  linkedin  : # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name/
-  github    : # "user_name" the last part of your profile url, e.g. https://github.com/user_name
-  npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
-  telegram  : # "user_name" the last part of your profile url, e.g. https://t.me/user_name
+# Fill in the protocol & hostname for your site.
+url: "https://hjfbswb.github.io"
 
+github:
+  username: hjfbswb
 
-## => GitHub Repository (if the site is hosted by GitHub)
-##############################
-repository: hjfbswb/hjfbswb
-repository_tree: master
+social:
+  name: 技术笔记
+  email: hjfbswb@126.com
+  links:
+    - https://github.com/hjfbswb
 
+# ↑ --------------------------
+# The end of `jekyll-seo-tag` settings
 
-## => Paths
-##############################
-paths:
-  root    : # title link url, "/" (default)
-  home    : # home layout url, "/" (default)
-  archive : # "/archive.html" (default)
-  rss     : # "/feed.xml" (default)
+# Prefer color scheme setting.
+# Available options: light | dark; empty follows the system preference.
+theme_mode: dark
 
+# the avatar on sidebar, support local or CORS resources
+avatar: /assets/img/avatar.jpg
 
-## => Post
-##############################
-## excerpt
-excerpt_separator: <!--more-->
+# boolean type, the global switch for TOC in posts.
+toc: true
 
-## license
-license: CC-BY-NC-ND-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0", "CC-BY-NC-ND-4.0"
-
-## TOC
-toc:
-  selectors: # "h1,h2,h3" (default)
-
-
-## => Markdown Enhancements
-##############################
-## Mathjax
-mathjax: # false (default), true
-mathjax_autoNumber: # false (default), true
-
-## Mermaid
-mermaid: # false (default), true
-
-## Chart
-chart: # false (default), true
-
-
-## => Paginate
-##############################
-paginate: 8
-paginate_path: /page:num # don't change this unless for special need
-
-
-## => Sources
-##############################
-sources: # bootcdn (default), unpkg
-
-
-## => Sharing
-##############################
-sharing:
-  provider: false # false (default), "addtoany", "addthis"
-
-  ## AddThis
-  addthis:
-    id: # AddThis pubid, e.g. ra-5xxxxxxxxxxx
-
-
-## => Comments
-##############################
 comments:
-  provider: false # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: # disabled
 
-  ## Disqus
-  disqus:
-    shortname: # the Disqus shortname for the site
+pwa:
+  enabled: true
+  cache:
+    enabled: true
 
-  ## Gitalk
-  # please refer to https://github.com/gitalk/gitalk for more info.
-  gitalk:
-    clientID    : # GitHub Application Client ID
-    clientSecret: # GitHub Application Client Secret
-    repository  : # GitHub repo
-    owner       : # GitHub repo owner
-    admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
-      # - your GitHub Id
+paginate: 10
 
-  ## Valine
-  # please refer to https://valine.js.org/en/ for more info.
-  valine:
-    app_id      : # LeanCloud App id
-    app_key     : # LeanCloud App key
-    placeholder : # Prompt information
+# The base URL of your site
+baseurl: ""
 
+# ------------ The following options are not recommended to be modified ------------------
 
-## => Pageview
-##############################
-pageview:
-  provider: false # false (default), "leancloud", "custom"
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts: # Rouge Options
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
-  ## Leancloud
-  leancloud:
-    app_id    : # LeanCloud App id
-    app_key   : # LeanCloud App key
-    app_class : # LeanCloud App class
-
-
-## => Analytics
-##############################
-analytics:
-  provider: false # false (default), "google", "custom"
-
-  ## Google Analytics
-  google:
-    tracking_id : # Google Analytics id for the site
-    anonymize_ip: false # Anonymize IP tracking for Analytics
-
-
-## => Build
-##############################
-markdown    : kramdown
-highlighter : rouge
-permalink   : date
-
-exclude:
-  - CHANGELOG.md
-  - HOW_TO_RELEASE.md
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README-*.md
-  - README.md
-  - gulpfile.js
-  - jekyll-text-theme.gemspec
-  - package-lock.json
-  - package.json
-  - /docs
-  - /node_modules
-  - /screenshots
-  - /test
-  - /vendor
+collections:
+  tabs:
+    output: true
+    sort_by: order
 
 defaults:
   - scope:
       path: ""
       type: posts
     values:
-      layout: article
-      sharing: true
-      license: true
-      aside:
-        toc: true
-      show_edit_on_github: false
-      pageview: true
+      layout: post
+      comments: false
+      toc: true
+      # Keep post URLs compatible with the previous TeXt setup
+      permalink: /:year/:month/:day/:title.html
+  - scope:
+      path: _drafts
+    values:
+      comments: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
 
+sass:
+  style: compressed
 
-## => Plugins
-##############################
-plugins:
-  - jekyll-feed
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jemoji
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
 
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - tools
+  - README.md
+  - LICENSE
+  - "*.config.js"
+  - "package*.json"
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - _site
+  - CLAUDE.md
 
-theme: minima
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/

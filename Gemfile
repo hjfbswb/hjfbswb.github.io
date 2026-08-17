@@ -1,6 +1,14 @@
 source "https://rubygems.org"
 
-gem "github-pages", group: :jekyll_plugins
+gem "jekyll-theme-chirpy", "~> 6.5"
 
-gem "tzinfo-data"
-gem "wdm", "~> 0.1.0" if Gem.win_platform?
+group :jekyll_plugins do
+  gem "jekyll-archives"
+  gem "jekyll-include-cache"
+  gem "jekyll-paginate"
+  gem "jekyll-redirect-from"
+  gem "jekyll-seo-tag"
+  gem "jekyll-sitemap"
+end
+
+gem "wdm", "~> 0.1.0", :platforms => [:mingw, :x64_mingw, :mswin]

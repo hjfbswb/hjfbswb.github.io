@@ -1,5 +1,7 @@
 ---
+title: 环境安装记录
 tags: notes
+categories: [笔记]
 modify_date: 2018-8-25
 ---
 
