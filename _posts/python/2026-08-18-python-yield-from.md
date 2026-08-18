@@ -29,13 +29,14 @@ def sub():
         print("子生成器收到:", x)
 
 def wrapper_for():          # 用 for-yield 转发
-    yield from sub()        # 先这么写，待会儿换成 for 循环
+    for x in sub():
+        yield x
 
 def wrapper_from():
     yield from sub()
 ```
 
-把 `wrapper_from` 换成手写的 `for x in sub(): yield x`，再用 `.send(10)` 往里面塞值，你会发现子生成器**永远收不到**那个 10。一个字符的写法之差，行为天差地别。
+两个看起来只是写法不同，但用 `.send(10)` 往 `wrapper_for` 里塞值，你会发现子生成器**永远收不到**那个 10；而 `wrapper_from` 能收到。一个字符的写法之差，行为天差地别。
 
 `yield from` 到底做了什么？为什么一个看似语法糖的东西，会让 Greg Ewing 专门写一份 [PEP 380](https://peps.python.org/pep-0380/)、让 Python 3.3 推迟发布来等它、甚至直接催生了后来的 `asyncio`？这篇文章把它讲透。
 
@@ -288,7 +289,7 @@ w.send(20)
 w.close()
 ```
 
-你会看到 `for-yield` 版本里 wrapper 收到了 10、20 却没转给 sub，sub 全程沉默；而 `yield from` 版本里消息直达 sub。**"消息能不能穿透中间层"，就是这两种写法的根本分野。**
+你会看到 `for-yield` 版本里 wrapper 收到了 10、20 却没转给 sub——sub 只打印出一堆 `None`（那是 `for v in g` 自己用 `next` 驱动迭代时塞进去的），从来没收到用户 send 的 10、20；而 `yield from` 版本里 10、20 直达 sub。**"消息能不能穿透中间层"，就是这两种写法的根本分野。**
 
 ### 实验 2：用 yield from 递归遍历目录
 

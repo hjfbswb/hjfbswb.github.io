@@ -139,10 +139,11 @@ class Point:
 
 ```python
 print(type(Point.x))         # <class 'member_descriptor'>
-print(Point.x.__offset__)    # 槽位在实例内存布局中的偏移量
+print(Point.x.__name__)      # 'x' —— 槽位名
+print(Point.x.__objclass__)  # <class 'Point'> —— 声明它的类
 ```
 
-访问 `p.x` 时，Python 通过这个描述符，直接从实例的固定内存偏移位置读写——**没有字典查找，也没有字典本身的开销**。
+访问 `p.x` 时，Python 通过这个描述符，直接从实例内存里该槽位的固定偏移位置读写——**没有字典查找，也没有字典本身的开销**（偏移量记录在描述符对应的 C 结构体里，Python 层没有直接暴露）。
 
 可以直接验证：
 
@@ -180,7 +181,7 @@ current, peak = tracemalloc.get_traced_memory()
 print(f"dict:  {current / 1024 / 1024:.1f} MB")
 ```
 
-在 CPython 3.11 上，**带 dict 的版本大约是 slots 版本的 3 倍内存**。这就是开头那个 OOM 故事的答案。
+在 CPython 3.11/3.13 上实测，上面这个两字段的例子，带 dict 的版本大约是 slots 版本的 **1.7 倍**（约 92 MB vs 54 MB）。这个数字随字段个数和 CPython 版本浮动——早年没有 key-sharing 优化时能接近 3 倍，新版本字典更紧凑后已明显缩小，但 slots 始终是最省的那个。这就是开头那个 OOM 故事的答案。
 
 > **先猜再看**：如果我在类创建之后写 `Point.__slots__ = ('x', 'y', 'z')`，新属性 `z` 会生效吗？
 >
@@ -402,14 +403,14 @@ for cls in (WithSlots, WithDict):
     tracemalloc.stop()
 ```
 
-预期输出（CPython 3.11，Linux）：
+在 CPython 3.11/3.13（Linux）上的实测量级：
 
 ```text
 WithSlots :   64.0 MB 左右
-WithDict  :  200.0 MB 左右
+WithDict  :  100.0 MB 左右
 ```
 
-跑一次，你对"省内存"这件事就有身体记忆了。
+具体数字随 CPython 版本和位数浮动（老版本的 dict 实例能到 200 MB 上下），但 slots 明显更省这个结论不变。跑一次，你对"省内存"这件事就有身体记忆了。
 
 ### 实验 3：打破 key-sharing
 
