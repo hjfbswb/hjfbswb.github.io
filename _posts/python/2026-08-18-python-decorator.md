@@ -2,6 +2,7 @@
 title: Python 装饰器：为什么加了一行 @log，函数就不认识自己了
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 23:43:00 +0800
 ---
 
 先看一段十行不到的代码：

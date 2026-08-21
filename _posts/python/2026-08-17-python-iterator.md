@@ -2,6 +2,7 @@
 title: Python 迭代器：为什么列表能 for，却不能 next
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-17 23:17:15 +0800
 ---
 
 先做一个实验。下面两行代码，第一行天衣无缝，第二行当场报错：

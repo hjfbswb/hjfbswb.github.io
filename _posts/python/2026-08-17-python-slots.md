@@ -2,6 +2,7 @@
 title: Python 对象的背包与紧身衣：从 __dict__ 到 __slots__
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 22:56:09 +0800
 ---
 
 凌晨两点，你写了两个小时的数据处理脚本，终于把一百万个用户对象加载进内存，准备跑分析。结果还没到第一个循环，内存就飙到 4GB，进程被系统 OOM 杀掉了。

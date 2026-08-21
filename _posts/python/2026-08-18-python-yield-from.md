@@ -2,6 +2,7 @@
 title: Python yield from：它不是 for-yield 的缩写
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 22:56:09 +0800
 ---
 
 先看一段几乎每个 Python 程序员都写过的代码。假设你有一个生成器，想把它产出的值"转手"再吐出去：

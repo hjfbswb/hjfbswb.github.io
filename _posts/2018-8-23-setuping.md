@@ -2,7 +2,7 @@
 title: 环境安装记录
 tags: notes
 categories: [笔记]
-modify_date: 2018-8-25
+last_modified_at: 2026-08-17 23:17:15 +0800
 ---
 
 记录环境安装过程。

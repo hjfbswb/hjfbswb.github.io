@@ -2,6 +2,7 @@
 title: Python 协程：从生成器到 async/await，一条线讲透
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 08:21:25 +0800
 ---
 
 先看一段你大概写过、也困惑过的代码：

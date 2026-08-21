@@ -2,6 +2,7 @@
 title: Python 匿名函数与高阶函数：你管这叫"匿名"，它不都叫 add 了吗
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 23:46:15 +0800
 ---
 
 先看一段四行代码：

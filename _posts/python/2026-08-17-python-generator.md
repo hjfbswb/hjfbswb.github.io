@@ -2,6 +2,7 @@
 title: Python 生成器：调用一个函数，函数体却一行都没执行
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-17 23:41:39 +0800
 ---
 
 先看一段再普通不过的代码：

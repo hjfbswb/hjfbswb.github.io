@@ -2,6 +2,7 @@
 title: Python 的 module 和 package：import 到底导入了什么
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 23:12:21 +0800
 ---
 
 先做一个实验。新建一个 `greet.py`：

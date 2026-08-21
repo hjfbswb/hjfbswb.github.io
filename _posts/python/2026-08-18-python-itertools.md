@@ -2,6 +2,7 @@
 title: Python itertools：一个永远不会停的 for 循环，和装它的瑞士军刀
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 23:49:09 +0800
 ---
 
 先看两行代码：

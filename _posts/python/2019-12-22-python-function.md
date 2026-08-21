@@ -2,7 +2,7 @@
 title: python function
 tags: python
 categories: [Python]
-modify_date: 2019-12-23
+last_modified_at: 2026-08-17 23:17:15 +0800
 ---
 
 python中的函数。

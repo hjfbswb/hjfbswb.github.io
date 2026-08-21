@@ -26,7 +26,7 @@ bundle exec jekyll build                    # 生产构建，输出到 _site/
 ## 写文章
 
 - 文章放在 `_posts/`（允许子目录，如 `_posts/python/`），文件名 `年-月-日-标题.md`。
-- front matter 至少包含 `title`；可选 `tags: [a, b]`、`categories: [c]`、`last_modified_at:`（Chirpy 用这个显示更新日期；老文章里的 `modify_date` 已被忽略）。
+- front matter 至少包含 `title`；可选 `tags: [a, b]`、`categories: [c]`、`last_modified_at:`（Chirpy 用这个显示更新日期；统一用秒级格式 `YYYY-MM-DD HH:MM:SS +0800`，取文章最后一次 git 提交的时间）。
 - 文章页自动生成摘要（从正文截取前 ~200 字）；`<!--more-->` 在 Chirpy 下不生效但保留无害。
 - layout/toc/comments 等由 `_config.yml` 的 defaults 统一设置，文章里不用重复写。
 - 标签/分类页由 `jekyll-archives` 自动生成，无需手工建页面。

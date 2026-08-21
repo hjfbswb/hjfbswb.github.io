@@ -2,6 +2,7 @@
 title: Python 闭包：为什么三个函数都返回了 2
 tags: [python]
 categories: [Python]
+last_modified_at: 2026-08-18 23:29:59 +0800
 ---
 
 先看一段十行不到的代码：
