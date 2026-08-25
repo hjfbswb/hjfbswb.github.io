@@ -24,6 +24,7 @@ last_modified_at: 2026-08-25 20:17:30 +0800
 #define RCC_APB2ENR (*(volatile unsigned int*)0x40023844)
 #define GPIOA_MODER (*(volatile unsigned int*)0x40020000)
 #define GPIOA_AFRL  (*(volatile unsigned int*)0x40020020)
+#define GPIOA_AFRH  (*(volatile unsigned int*)0x40020024)
 #define USART1_SR   (*(volatile unsigned int*)0x40011000)
 #define USART1_DR   (*(volatile unsigned int*)0x40011004)
 #define USART1_BRR  (*(volatile unsigned int*)0x40011008)
@@ -52,8 +53,8 @@ int main(void)
 
     GPIOA_MODER |= 2u << 18;           /* PA9  -> 复用（10） */
     GPIOA_MODER |= 2u << 20;           /* PA10 -> 复用（10） */
-    GPIOA_AFRL  |= 7u << 8;            /* PA9  -> AF7 = USART1 */
-    GPIOA_AFRL  |= 7u << 12;           /* PA10 -> AF7 = USART1 */
+    GPIOA_AFRL  |= 7u << 8;            /* PA9  -> AF7 = USART1（AFRL 管 PA0–PA7） */
+    GPIOA_AFRH  |= 7u << 8;            /* PA10 -> AF7 = USART1（PA8–PA15 归 AFRH） */
 
     USART1_BRR = 84000000 / 115200;    /* = 729，波特率的全部秘密 */
     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);  /* UE | TE | RE */
