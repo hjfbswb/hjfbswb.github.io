@@ -2,7 +2,7 @@
 title: Cortex-M4 与 MCU 开发：在一个没有操作系统的世界里写代码
 tags: [mcu, cortex-m4, arm, 嵌入式]
 categories: [嵌入式]
-last_modified_at: 2026-08-23 21:46:49 +0800
+last_modified_at: 2026-08-26 13:34:03 +0800
 ---
 
 先说一个反直觉的事实：你花几千块组装的电脑，无法保证"在精确的第 1000 个时钟周期把某个引脚拉高"这件事；而一片几块钱的 Cortex-M4 单片机（MCU，Microcontroller Unit，微控制器），可以。

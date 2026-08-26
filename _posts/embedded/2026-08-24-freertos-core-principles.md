@@ -2,7 +2,7 @@
 title: FreeRTOS 核心原理：任务是怎么"凭空"来回切换的（Cortex-M4 视角）
 tags: [freertos, rtos, cortex-m4, 嵌入式]
 categories: [嵌入式]
-last_modified_at: 2026-08-24 12:58:39 +0800
+last_modified_at: 2026-08-26 13:34:03 +0800
 ---
 
 先说一个几乎没人明说的诡异事实：在 FreeRTOS 里，你写的每个任务都是一个 `for(;;)` 死循环，里面没有一行"我该把 CPU 让出来了"的代码——但几个任务却在自动轮流执行。
