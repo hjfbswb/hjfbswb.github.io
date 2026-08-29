@@ -21,7 +21,7 @@ bundle exec jekyll serve --host 0.0.0.0 --port 8080   # 本地预览，http://lo
 bundle exec jekyll build                    # 生产构建，输出到 _site/
 ```
 
-修改 `_config.yml` 后必须重启 serve（不会热加载）。博客内容没有自动化测试。
+修改 `_config.yml` 后必须重启 serve（不会热加载）。博客内容没有自动化测试。**如果本地没有可用的 Jekyll 环境，则不需要本地构建验证博文**（push 后由 GitHub Actions 构建部署），写完文章检查 front matter 和文件名格式即可。
 
 ## 写文章
 
