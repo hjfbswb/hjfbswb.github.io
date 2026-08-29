@@ -2,6 +2,7 @@
 title: FreeRTOS 队列：任务之间怎么安全地"递东西"（信号量竟然也是队列）
 tags: [freertos, rtos, queue, 嵌入式]
 categories: [嵌入式]
+last_modified_at: 2026-08-29 21:56:35 +0800
 ---
 
 上一篇 [《FreeRTOS 核心原理》](/2026/08/24/freertos-core-principles.html) 结尾留了句话：中断里要通知任务，用"置标志位 / 放队列 / 唤醒一个任务"。前一个你已经会了--全局变量加标志位，裸机时代人人写过。但先看一个几乎每个 RTOS 新手都踩过的坑：
