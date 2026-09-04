@@ -1,0 +1,250 @@
+---
+title: 双分区升级：5 分钟看懂
+layout: null
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>双分区升级 · 5 分钟看懂</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    background: #faf7f2;
+    color: #292524;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header { text-align: center; margin-bottom: 64px; }
+  .kicker {
+    display: inline-block; font-size: 14px; letter-spacing: 4px;
+    color: #a8a29e; text-transform: uppercase; margin-bottom: 16px;
+  }
+  h1 { font-size: clamp(36px, 6vw, 56px); font-weight: 800; }
+  h1 .green { color: #16a34a; }
+  .subtitle { font-size: 20px; color: #78716c; margin-top: 12px; }
+
+  section { margin-bottom: 72px; }
+  h2 {
+    font-size: clamp(24px, 4vw, 34px); font-weight: 800;
+    text-align: center; margin-bottom: 8px;
+  }
+  h2 .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; margin-right: 12px; vertical-align: middle;
+    background: #292524; color: #fff; border-radius: 50%;
+    font-size: 22px;
+  }
+  .lead { text-align: center; font-size: 18px; color: #78716c; margin-bottom: 32px; }
+
+  .card {
+    background: #fff; border-radius: 24px; padding: 32px;
+    box-shadow: 0 2px 8px rgba(41,37,36,.06), 0 12px 32px rgba(41,37,36,.05);
+  }
+  svg { display: block; width: 100%; height: auto; }
+
+  .caption {
+    text-align: center; font-size: 18px; font-weight: 600; margin-top: 20px;
+    color: #44403c;
+  }
+  .caption .bad { color: #dc2626; }
+  .caption .good { color: #16a34a; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 720px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  .step {
+    background: #fff; border-radius: 20px; padding: 20px 16px; text-align: center;
+    box-shadow: 0 2px 8px rgba(41,37,36,.06);
+  }
+  .step .step-emoji { font-size: 44px; line-height: 1; margin-bottom: 12px; }
+  .step .step-title { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+  .step .step-desc { font-size: 14px; color: #78716c; }
+
+  .summary {
+    background: #292524; color: #fff; border-radius: 24px;
+    padding: 48px 32px; text-align: center;
+  }
+  .summary .big { font-size: clamp(24px, 4vw, 34px); font-weight: 800; line-height: 1.6; }
+  .summary .big em { font-style: normal; color: #4ade80; }
+  .footnote { font-size: 14px; color: #a8a29e; margin-top: 24px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">ELI5 · 嵌入式</div>
+  <h1>双分区升级：<br><span class="green">永远留一条退路</span></h1>
+  <div class="subtitle">Cortex-M4 的 MCU 是怎么做到「升级失败也不变砖」的</div>
+</header>
+
+<!-- ① 问题 -->
+<section>
+  <h2><span class="num">1</span>只有一个分区，升级像「拆房重建」</h2>
+  <p class="lead">Flash 里只有一份程序，升级就得先擦掉它</p>
+  <div class="card">
+    <svg viewBox="0 0 800 300" role="img" aria-label="单分区升级：擦除旧程序、写入中、断电变砖">
+      <!-- 设备1：正常运行 -->
+      <g>
+        <rect x="30" y="70" width="200" height="140" rx="20" fill="#e7f5ec" stroke="#16a34a" stroke-width="4"/>
+        <rect x="55" y="100" width="150" height="50" rx="8" fill="#16a34a"/>
+        <text x="130" y="132" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">程序 ✓</text>
+        <text x="130" y="180" text-anchor="middle" font-size="15" fill="#166534">正常运行中</text>
+        <text x="130" y="245" text-anchor="middle" font-size="14" fill="#a8a29e">① 程序只有一份</text>
+      </g>
+      <!-- 箭头 -->
+      <g>
+        <path d="M 250 140 L 290 140" stroke="#a8a29e" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 290 140 l -14 -9 v 18 z" fill="#a8a29e"/>
+      </g>
+      <!-- 设备2：升级中，擦了一半 -->
+      <g>
+        <rect x="310" y="70" width="200" height="140" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="4"/>
+        <rect x="335" y="100" width="70" height="50" rx="8" fill="#16a34a"/>
+        <rect x="405" y="100" width="80" height="50" rx="8" fill="#fcd34d" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 5"/>
+        <text x="445" y="130" text-anchor="middle" font-size="15" fill="#92400e" font-weight="700">写入中…</text>
+        <text x="410" y="180" text-anchor="middle" font-size="15" fill="#b45309">擦一半、写一半</text>
+        <!-- 闪电 = 断电 -->
+        <path d="M 470 40 l -18 30 h 14 l -10 28 l 26 -36 h -14 l 12 -22 z" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+        <text x="470" y="30" text-anchor="middle" font-size="15" fill="#b45309" font-weight="800">突然断电!</text>
+        <text x="410" y="245" text-anchor="middle" font-size="14" fill="#a8a29e">② 擦旧写新，同时进行</text>
+      </g>
+      <!-- 箭头 -->
+      <g>
+        <path d="M 530 140 L 570 140" stroke="#a8a29e" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 570 140 l -14 -9 v 18 z" fill="#a8a29e"/>
+      </g>
+      <!-- 设备3：变砖 -->
+      <g>
+        <rect x="590" y="70" width="180" height="140" rx="20" fill="#fde8e8" stroke="#dc2626" stroke-width="4"/>
+        <text x="680" y="125" text-anchor="middle" font-size="44">🧱</text>
+        <text x="680" y="175" text-anchor="middle" font-size="16" fill="#b91c1c" font-weight="800">变砖！</text>
+        <text x="680" y="245" text-anchor="middle" font-size="14" fill="#a8a29e">③ 新旧都不完整</text>
+      </g>
+    </svg>
+    <p class="caption"><span class="bad">旧程序没了，新程序没写完</span> —— 设备再也起不来</p>
+  </div>
+</section>
+
+<!-- ② 双分区 -->
+<section>
+  <h2><span class="num">2</span>双分区 = 一个 MCU，两栋房子</h2>
+  <p class="lead">把 Flash 切成两半：一半住着，一半空着备用</p>
+  <div class="card">
+    <svg viewBox="0 0 800 320" role="img" aria-label="双分区 Flash：Bank A 运行中，Bank B 备用">
+      <!-- MCU 外壳 -->
+      <rect x="60" y="40" width="680" height="240" rx="28" fill="#fff" stroke="#292524" stroke-width="5"/>
+      <text x="400" y="28" text-anchor="middle" font-size="17" fill="#78716c" font-weight="700">MCU（Cortex-M4 + Flash）</text>
+      <!-- 引脚装饰 -->
+      <g fill="#a8a29e">
+        <rect x="100" y="26" width="10" height="14" rx="3"/><rect x="140" y="26" width="10" height="14" rx="3"/>
+        <rect x="640" y="26" width="10" height="14" rx="3"/><rect x="680" y="26" width="10" height="14" rx="3"/>
+        <rect x="100" y="280" width="10" height="14" rx="3"/><rect x="140" y="280" width="10" height="14" rx="3"/>
+        <rect x="640" y="280" width="10" height="14" rx="3"/><rect x="680" y="280" width="10" height="14" rx="3"/>
+      </g>
+      <!-- Bank A -->
+      <g>
+        <rect x="95" y="70" width="290" height="180" rx="16" fill="#e7f5ec" stroke="#16a34a" stroke-width="4"/>
+        <text x="240" y="112" text-anchor="middle" font-size="22" font-weight="800" fill="#166534">分区 A</text>
+        <rect x="125" y="135" width="230" height="42" rx="8" fill="#16a34a"/>
+        <text x="240" y="162" text-anchor="middle" font-size="16" fill="#fff" font-weight="700">当前程序 v1.0</text>
+        <text x="240" y="215" text-anchor="middle" font-size="16" fill="#16a34a" font-weight="800">🏠 正在运行</text>
+      </g>
+      <!-- Bank B -->
+      <g>
+        <rect x="415" y="70" width="290" height="180" rx="16" fill="#fafaf9" stroke="#a8a29e" stroke-width="4" stroke-dasharray="10 8"/>
+        <text x="560" y="112" text-anchor="middle" font-size="22" font-weight="800" fill="#78716c">分区 B</text>
+        <text x="560" y="165" text-anchor="middle" font-size="34">🕳️</text>
+        <text x="560" y="215" text-anchor="middle" font-size="16" fill="#78716c" font-weight="800">空着，随时待命</text>
+      </g>
+      <!-- 切换开关 -->
+      <g>
+        <circle cx="400" cy="160" r="6" fill="#292524"/>
+        <text x="400" y="290" text-anchor="middle" font-size="14" fill="#78716c">Bootloader 在开机时决定用哪一半</text>
+      </g>
+    </svg>
+    <p class="caption"><span class="good">正在用的程序，永远不碰</span> —— 升级只在空的那一半里折腾</p>
+  </div>
+</section>
+
+<!-- ③ 四步 -->
+<section>
+  <h2><span class="num">3</span>升级只走四步</h2>
+  <p class="lead">新程序「先体检，后上岗」</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-emoji">📥</div>
+      <div class="step-title">下载</div>
+      <div class="step-desc">新固件悄悄写进空分区 B<br>分区 A 照常工作</div>
+    </div>
+    <div class="step">
+      <div class="step-emoji">🔍</div>
+      <div class="step-title">校验</div>
+      <div class="step-desc">核对校验和 / 签名<br>确认写得完整无误</div>
+    </div>
+    <div class="step">
+      <div class="step-emoji">🔁</div>
+      <div class="step-title">切换</div>
+      <div class="step-desc">重启，Bootloader<br>改从分区 B 启动</div>
+    </div>
+    <div class="step">
+      <div class="step-emoji">🛟</div>
+      <div class="step-title">回滚</div>
+      <div class="step-desc">新版本有问题？<br>一键切回分区 A</div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 断电也不怕 -->
+<section>
+  <h2><span class="num">4</span>最坏的时刻断电，也只是一场虚惊</h2>
+  <p class="lead">哪怕写 B 写到 99% 时断电</p>
+  <div class="card">
+    <svg viewBox="0 0 800 300" role="img" aria-label="写入分区 B 中途断电，分区 A 完好，设备照常启动">
+      <!-- 分区 A 完好 -->
+      <g>
+        <rect x="30" y="50" width="250" height="200" rx="16" fill="#e7f5ec" stroke="#16a34a" stroke-width="4"/>
+        <text x="155" y="95" text-anchor="middle" font-size="20" font-weight="800" fill="#166534">分区 A</text>
+        <rect x="60" y="115" width="190" height="42" rx="8" fill="#16a34a"/>
+        <text x="155" y="142" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">程序 v1.0 ✓</text>
+        <text x="155" y="190" text-anchor="middle" font-size="15" fill="#16a34a" font-weight="800">毫发无伤</text>
+        <text x="155" y="290" text-anchor="middle" font-size="14" fill="#a8a29e">旧房子一直有人住</text>
+      </g>
+      <!-- 分区 B 写一半 -->
+      <g>
+        <rect x="330" y="50" width="250" height="200" rx="16" fill="#fde8e8" stroke="#dc2626" stroke-width="4" stroke-dasharray="10 8"/>
+        <text x="455" y="95" text-anchor="middle" font-size="20" font-weight="800" fill="#b91c1c">分区 B</text>
+        <rect x="360" y="115" width="95" height="42" rx="8" fill="#f59e0b"/>
+        <rect x="455" y="115" width="95" height="42" rx="8" fill="#fcd34d" stroke="#dc2626" stroke-width="3" stroke-dasharray="6 5"/>
+        <text x="455" y="142" text-anchor="middle" font-size="15" fill="#92400e" font-weight="700">写到 99% ⚡</text>
+        <text x="455" y="190" text-anchor="middle" font-size="15" fill="#b91c1c" font-weight="800">写坏了？扔掉重来</text>
+        <text x="455" y="290" text-anchor="middle" font-size="14" fill="#a8a29e">空房子塌了不心疼</text>
+      </g>
+      <!-- 结果 -->
+      <g>
+        <path d="M 610 150 h 40" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 650 150 l -14 -9 v 18 z" fill="#16a34a"/>
+        <rect x="655" y="90" width="120" height="120" rx="16" fill="#292524"/>
+        <text x="715" y="145" text-anchor="middle" font-size="16" fill="#4ade80" font-weight="800">照常开机</text>
+        <text x="715" y="172" text-anchor="middle" font-size="14" fill="#d6d3d1">用 v1.0</text>
+      </g>
+    </svg>
+    <p class="caption"><span class="good">失败只伤到「草稿」，动不了「正本」</span></p>
+  </div>
+</section>
+
+<!-- 总结 -->
+<section class="summary">
+  <p class="big">旧的不动，新的写好再换。<br>手里<em>永远有一栋能住的房子</em>。</p>
+  <p class="footnote">
+    小注：双分区（Dual-Bank / 双 Slot）是 MCU 的 Flash 控制器和 Bootloader 方案提供的机制，<br>
+    Cortex-M4 是跑程序的 CPU 内核，两者配合才有了安全的 OTA 升级。STM32 的双 Bank Flash、MCUboot 的 swap 就是典型实现。
+  </p>
+</section>
+
+</div>
+</body>
+</html>
