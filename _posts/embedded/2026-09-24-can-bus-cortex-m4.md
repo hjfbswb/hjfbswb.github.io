@@ -2,7 +2,7 @@
 title: CAN 总线：一根线上没有主持人的会议（以 STM32F4 为例）
 tags: [can, 总线, cortex-m4, stm32, 嵌入式]
 categories: [嵌入式]
-last_modified_at: 2026-09-24 17:52:29 +0800
+last_modified_at: 2026-10-01 14:33:27 +0800
 ---
 
 [《串口篇》](/2026/08/25/uart-serial-cortex-m4.html) 结尾岔出的总线之路，走过了 SPI（加一根时钟线）和 I2C（时钟线 + 地址 + 开漏），但你可能注意到它们有个共同点：**都得有个主机**。主机不点头，从机一个字都不能说。现在想象机器人上的场景：主控一块、六七个关节电机驱动各一块、IMU 一块、电池管理一块，全都挂在同一对线上，谁想说话谁开口——没有主机、没有点名、没有中央仲裁器。
@@ -98,7 +98,7 @@ int can_recv(unsigned int *id, unsigned char d[8])
         d[i] = CAN_RDLR >> (8 * i);
     for (i = 0; i < 4; i++)
         d[4 + i] = CAN_RDHR >> (8 * i);
-    CAN_RF0R = 1u << 5;                 /* RFOM0：释放 FIFO 顶部（直写，别 |=） */
+    CAN_RF0R = 1u << 4;                 /* RFOM0：释放 FIFO 顶部（直写，别 |=） */
     return 1;
 }
 

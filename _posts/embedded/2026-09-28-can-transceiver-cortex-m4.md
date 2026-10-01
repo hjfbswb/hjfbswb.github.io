@@ -2,7 +2,7 @@
 title: CAN 收发器：MCU 从没碰过 CAN 那两根线（以 STM32F4 为例）
 tags: [can, 收发器, cortex-m4, stm32, 嵌入式]
 categories: [嵌入式]
-last_modified_at: 2026-09-28 12:53:35 +0800
+last_modified_at: 2026-10-01 14:33:27 +0800
 ---
 
 [上一篇 CAN 总线](/2026/09/24/can-bus-cortex-m4.html) 用环回模式把整个协议层跑通了，收发器被一句话打发：「真要接物理总线时，再加一颗 CAN 收发器（3.3V 的 SN65HVD230 或 5V 的 TJA1050）和一根双绞线」。这篇就来还这笔债——但先看一个会让你愣一下的事实。
@@ -131,7 +131,7 @@ CAN_BTR = (10u << 16)      /* BS1 = 11 tq */
 **答案**：上一篇留过话——「总线上只剩你自己，或者大家都没听清，立刻报错」。现在你是这局唯一的玩家：你的帧完好地发上总线，CRC 也没人怀疑，但 ACK 槽是你发的一个隐性位，你松手，全世界没有人拽——ACK 错误，错误帧拉响，重传。而重传的结果一模一样。每一次失败，TEC 加 8（上一篇立的规矩）。越过 127，你进错误被动；再往上，32 次左右（256 > 255）——**bus-off，你被自己放逐了**。代码：
 
 ```c
-#define CAN_ESR    (*(volatile unsigned int*)(CAN1_BASE + 0x040)) /* 错误状态寄存器 */
+#define CAN_ESR    (*(volatile unsigned int*)(CAN1_BASE + 0x018)) /* 错误状态寄存器 */
 
 /* can_init()：同上一篇，唯一改动是 BTR 去掉 LBKM 位。
    uart_init/uart_putc 来自串口篇。 */
